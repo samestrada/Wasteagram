@@ -65,7 +65,7 @@ class _ListScreenState extends State<ListScreen> {
         },
         child: ListTile(
           trailing: Text(post.quantity.toString(), style: TextStyle(fontSize: 23)),
-          title: Text(DateFormat.MMMEd().format(post.date), style: TextStyle(fontSize: 21))
+          title: Text(DateFormat.yMMMEd().format(post.date), style: TextStyle(fontSize: 21))
         )
       )
     );

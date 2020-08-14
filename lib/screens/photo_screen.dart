@@ -25,6 +25,14 @@ class _PhotoScreenState extends State<PhotoScreen> {
   Post post = new Post();
   final picker = ImagePicker();
 
+  void initState() { 
+    super.initState();
+     setState(() {
+      getLocation();
+  });
+   
+  }
+
   Future choosePhoto() async{
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
      
@@ -47,7 +55,7 @@ class _PhotoScreenState extends State<PhotoScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Wastegram'),
+        title: Text('Wasteagram'),
         ),
       body: Center(
         child: _image == null ? displayButtons(context)
@@ -70,19 +78,28 @@ class _PhotoScreenState extends State<PhotoScreen> {
               child: Image.file(_image),
             ),
             Container(
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30),
-                decoration: 
-                  InputDecoration(
-                    labelText: 'Number of wasted items',
-                    labelStyle: TextStyle(fontSize: 30, color: Colors.grey),
-                    floatingLabelBehavior: FloatingLabelBehavior.auto
-                  ),
-                  onSaved: (value){
-                    post.quantity = num.parse(value);
+              child: Semantics(
+                label: 'Form field to enter quantity of wasted items',
+                child: TextFormField(
+                  validator: (value) {
+                  if (value.isEmpty) {
+                    return 'This field is required';
+                  } return null;
                   },
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 30),
+                  decoration: 
+                    InputDecoration(
+                      labelText: 'Number of wasted items',
+                      labelStyle: TextStyle(fontSize: 30, color: Colors.grey),
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      // errorText: 'This field is required'
+                    ),
+                    onSaved: (value){
+                      post.quantity = num.parse(value);
+                    },
+                )
               )
             ),
           ]
@@ -91,7 +108,10 @@ class _PhotoScreenState extends State<PhotoScreen> {
           alignment: Alignment.bottomCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minWidth: double.infinity, minHeight: 80),
-            child: RaisedButton(
+            child: Semantics(
+              label: 'Button to submit new post data ',
+              button: true,
+              child: RaisedButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0)
                 ),
@@ -99,11 +119,14 @@ class _PhotoScreenState extends State<PhotoScreen> {
                   Icons.cloud_upload, size: 80,
                 ),
                 onPressed: () async{
-                  _key.currentState.save();
-                  getLocation();
-                  saveData(context);
+                  if (_key.currentState.validate()) {
+                    _key.currentState.save();
+                    // getLocation();
+                    saveData(context);
+                  } 
                 },
               )
+            )
             )
         )
       ]

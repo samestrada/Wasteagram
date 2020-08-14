@@ -30,10 +30,14 @@ Widget _createFAB(button, context){
     return Semantics(
           label: 'Add a new post',
           button: true,
-          child: FloatingActionButton(
+          child: Container(
+            width: 80,
+            height: 80,
+            child: FloatingActionButton(
             onPressed: () => Navigator.pushNamed(context, PhotoScreen.routeName),
-            child: Icon(Icons.add_a_photo)
+            child: Icon(Icons.add_a_photo, size: 36)
           )
+        )
     );
   } else{
     return Container();

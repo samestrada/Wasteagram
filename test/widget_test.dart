@@ -5,12 +5,28 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:wasteagram/main.dart';
+import 'package:wasteagram/models/post.dart';
 
 void main() {
+    test('Test Post Model creation', (){
+      DateTime currentTime = DateTime.now();
+      Post post = Post(
+        date:currentTime,
+        imageURL: 'my-image.url',
+        quantity: 10,
+        latitude: 592.0,
+        longitude: -42.0
+      );
+
+      expect(currentTime, post.date);
+      expect('my-image.url', post.imageURL);
+      expect(10, post.quantity);
+      expect(592.0, post.latitude);
+      expect(-42.0, post.latitude);
+    }
+    
+    );
 //  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
 //    // Build our app and trigger a frame.
 //    await tester.pumpWidget(MyApp());
