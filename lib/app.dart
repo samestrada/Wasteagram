@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wasteagram/screens/detail_screen.dart';
 import 'package:wasteagram/screens/list_screen.dart';
 import 'package:wasteagram/screens/photo_screen.dart';
-import 'package:wasteagram/screens/add_post_screen.dart';
 
 
 class App extends StatelessWidget {
